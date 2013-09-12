@@ -21,9 +21,14 @@ public class DamageListener implements Listener, Colors
 	@EventHandler (priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onDamage(EntityDamageByEntityEvent event)
 	{
-		
 		Entity entity = event.getEntity();
 		Entity attacker = event.getDamager();
+		
+		if (Configuration.getExcludedWorlds().contains(entity.getWorld().getName()) 
+		|| Configuration.getExcludedWorlds().contains(attacker.getWorld().getName()))
+		{
+			return;
+		}
 		
 		if (event.getCause() != DamageCause.CUSTOM && event.getDamage() >= 0)
 		{
