@@ -3,7 +3,6 @@ package com.github.r0306.AntiRelog.Util;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -18,11 +17,7 @@ public class Util
 	private static final String name = Plugin.getPlugin().getDescription().getName();
 	
 	private static final String version = Plugin.getPlugin().getDescription().getVersion();
-	
-	private static final String website = Plugin.getPlugin().getDescription().getWebsite();
-	
-	private static String newVersion;
-	
+
 	public static String getName()
 	{
 		
@@ -34,27 +29,6 @@ public class Util
 	{
 		
 		return version;
-		
-	}
-	
-	public static String getWebsite()
-	{
-		
-		return website;
-		
-	}
-	
-	public static String getDownload()
-	{
-		
-		return website.replaceAll("files.rss", "");
-		
-	}
-	
-	public static String getNewVersion()
-	{
-		
-		return newVersion;
 		
 	}
 	
@@ -101,21 +75,8 @@ public class Util
 		return sender.hasPermission("antirelog.unban");
 		
 	}
-	
-	public static boolean aggroNPC(Player player)
-	{
-		
-		return player.hasPermission("antirelog.aggressivenpc");
-		
-	}
-	
-	public static boolean citizensEnabled()
-	{
-		
-		return Bukkit.getPluginManager().getPlugin("Citizens") != null && Bukkit.getPluginManager().getPlugin("Citizens").getDescription().getVersion().startsWith("1");
-		
-	}
-	
+
+
 	public static List<EntityType> getHostileMobs()
 	{
 		
@@ -133,20 +94,5 @@ public class Util
 							 EntityType.SHEEP, EntityType.SNOWMAN, EntityType.SQUID, EntityType.VILLAGER);
 		
 	}
-
-    
-    public static String versionCorrect(String version)
-    {
-
-    	if (version.length() < 3)
-    	{
-    		
-    		version += "0";
-    		
-    	}
-    	
-    	return version;
-    	 	
-    }
     
 }
