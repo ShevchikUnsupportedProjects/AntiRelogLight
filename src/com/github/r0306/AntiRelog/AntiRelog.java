@@ -165,10 +165,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 		cfg.addDefault("PvP.Unban.Message-Enabled", true);
 		cfg.addDefault("PvP.Unban.Message", "<darkaqua>You logged off during PVP and as a result you have lost your items.");
 		cfg.addDefault("PvP.Unban.Run-Commands", Arrays.asList("say <player> has logged on after being banned (edit the config to change this default runnable command)."));
-		
-		cfg.addDefault("PvP.CombatLog.NPC.Enabled", false);
-		cfg.addDefault("PvP.CombatLog.NPC.Despawn-Delay", 120);
-		cfg.addDefault("PvP.CombatLog.NPC.Default-Aggressive", false);
 					
 		cfg.addDefault("PvP.CombatLog.Drop.Items", true);
 		cfg.addDefault("PvP.CombatLog.Drop.Armor", true);
