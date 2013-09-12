@@ -1,6 +1,7 @@
 package com.github.r0306.AntiRelog;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -177,7 +178,9 @@ public class AntiRelog extends JavaPlugin implements Colors
 
 		cfg.addDefault("PvP.Command.Disallowed-List", Arrays.asList("tp", "warp", "home", "tpa", "creative"));
 		
-		cfg.addDefault("PvP.Command.WhiteList", Arrays.asList("null"));
+		cfg.addDefault("PvP.Command.WhiteList", new ArrayList<String>());
+		
+		cfg.addDefault("Exclusions.DisabledWorlds", new ArrayList<String>());
 		
 		cfgOptions.copyDefaults(true);
 		

@@ -54,6 +54,8 @@ public class Configuration implements Colors
 	
 	private static List<String> whiteList = config.getStringList("PvP.Command.WhiteList");
 	
+	private static List<String> excludedWorlds = config.getStringList("Exclusions.DisabledWorlds");
+	
 			
 	public static boolean motdEnabled()
 	{
@@ -228,6 +230,13 @@ public class Configuration implements Colors
 	{
 		
 		return Configuration.getDisallowedCommands().size() == 0 || Configuration.getDisallowedCommands().get(0) == "null";
+		
+	}
+	
+	public static List<String> getExcludedWorlds()
+	{
+		
+		return excludedWorlds;
 		
 	}
 
