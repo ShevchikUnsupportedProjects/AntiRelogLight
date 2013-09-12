@@ -22,7 +22,5 @@ public interface Colors
 	ChatColor red = ChatColor.RED;
 	ChatColor white = ChatColor.WHITE;
 	ChatColor yellow = ChatColor.YELLOW;
-	String name = ChatColor.GOLD + "[" + Util.getName() + "] ";
-	String version = Util.getVersion();
-	
+	String name = ChatColor.GOLD + "[" + Plugin.getPlugin().getDescription().getName() + "] ";
 }

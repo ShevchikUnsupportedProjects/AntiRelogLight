@@ -32,14 +32,7 @@ public class Executor implements CommandExecutor, Colors
 		if (cmd.getName().equalsIgnoreCase("ar") || cmd.getName().equalsIgnoreCase("antirelog") || cmd.getName().equalsIgnoreCase("arl"))
 		{
 			
-			if (args.length == 0)
-			{
-
-				displayIntro(sender);
-				
-			}
-			
-			else if (args.length == 1)
+			if (args.length == 1)
 			{
 				
 				if (args[0].equalsIgnoreCase("t") || args[0].equalsIgnoreCase("time"))
@@ -114,13 +107,6 @@ public class Executor implements CommandExecutor, Colors
 		
 		return true;
 	
-	}
-	
-	public void displayIntro(CommandSender sender)
-	{
-		
-		sender.sendMessage(ChatColor.GRAY + "[AntiRelog] This is version " + version + ".");
-		
 	}
 	
 	public void displayRemainingTime(Player player)

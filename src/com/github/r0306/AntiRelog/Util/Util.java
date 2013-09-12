@@ -13,25 +13,7 @@ public class Util
 {
 
 	public static String newLine = System.getProperty( "line.separator" );
-	
-	private static final String name = Plugin.getPlugin().getDescription().getName();
-	
-	private static final String version = Plugin.getPlugin().getDescription().getVersion();
 
-	public static String getName()
-	{
-		
-		return name;
-		
-	}
-	
-	public static String getVersion()
-	{
-		
-		return version;
-		
-	}
-	
 	public static String colorizeText(String string) {
 
 	        string = string.replaceAll("<black>", ChatColor.BLACK+"");
