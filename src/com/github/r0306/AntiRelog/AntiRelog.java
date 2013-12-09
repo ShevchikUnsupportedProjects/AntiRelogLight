@@ -8,7 +8,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.r0306.AntiRelog.Listeners.AntiTeleportListener;
 import com.github.r0306.AntiRelog.Listeners.DamageListener;
 import com.github.r0306.AntiRelog.Listeners.DeathListener;
 import com.github.r0306.AntiRelog.Listeners.FreezeCommand;
@@ -117,7 +116,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 		getServer().getPluginManager().registerEvents(new LoginListener(), this);
 		getServer().getPluginManager().registerEvents(new LogPrevention(), this);
 		getServer().getPluginManager().registerEvents(new FreezeCommand(), this);
-		getServer().getPluginManager().registerEvents(new AntiTeleportListener(), this);
 	}
 	
 	
