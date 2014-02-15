@@ -53,8 +53,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 	public void registerExecutors()
 	{
 
-		getCommand("ar").setExecutor(new Executor());
-		getCommand("arl").setExecutor(new Executor());
 		getCommand("antirelog").setExecutor(new Executor());
 
 	}
