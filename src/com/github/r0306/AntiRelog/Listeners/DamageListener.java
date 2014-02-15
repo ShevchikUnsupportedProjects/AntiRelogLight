@@ -85,6 +85,7 @@ public class DamageListener implements Listener, Colors
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void tagPlayerProjectile(Player player, Projectile projectile)
 	{
 
