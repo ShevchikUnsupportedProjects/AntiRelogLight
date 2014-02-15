@@ -14,23 +14,23 @@ public class DeathListener implements Listener
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event)
 	{
-		
+
 		Player player = event.getEntity();
-		
+
 		if (DataBase.isInCombat(player))
 		{
-			
+
 			DataBase.removeFromCombat(player);
-			
+
 			if (Configuration.tagMessageEnabled())
 			{
-				
+
 				player.sendMessage(Configuration.getTagMessage());
-				
+
 			}
-			
+
 		}
-				
+
 	}
-	
+
 }

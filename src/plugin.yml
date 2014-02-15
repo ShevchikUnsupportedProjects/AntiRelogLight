@@ -10,9 +10,6 @@ commands:
     description: Displays combat time left.
     usage: /<command>
     aliases: [antirelog t]
-  antirelog unban:
-    description: Unbans the selected player when they combat log.
-    usage: /<command>
 permissions:
     antirelog.*:
         description: Gives access to all PVP bypasses and AntiRelog commands.
@@ -22,10 +19,4 @@ permissions:
             antirelog.aggressivenpc: true
     antirelog.pvpbypass:
         description: Players who have this node can bypass all PVP battles and penalties.
-        default: op
-    antirelog.unban:
-        description: Grants the ability to unban players who were originally banned through pvp logging.
-        default: op
-    antirelog.aggressivenpc:
-        description: Players who have this node spawn an aggressive NPC to fight for them when they log out.
         default: op
