@@ -1,6 +1,8 @@
 package com.github.r0306.AntiRelog.Util;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -15,6 +17,10 @@ public class Configuration implements Colors
 	private static String tagMessage = Util.colorizeText(config.getString("PvP.Tag-Message.Tag"));
 
 	private static String unTagMessage = Util.colorizeText(config.getString("PvP.Tag-Message.Un-Tag"));
+	
+	private static Set<String> invalidLeaveReasons = new HashSet<String>(config.getStringList("PvP.LeaveReasons"));
+	
+	private static int freezeDuration = config.getInt("PvP.Freeze-Duration");
 
 	private static boolean dropItems = config.getBoolean("PvP.CombatLog.Drop.Items");
 
@@ -22,13 +28,7 @@ public class Configuration implements Colors
 
 	private static boolean dropExp = config.getBoolean("PvP.CombatLog.Drop.Exp");
 
-	private static boolean disallowAll = config.getBoolean("PvP.Command.Disallow-All");
-
-	private static int freezeDuration = config.getInt("PvP.Command.Freeze-Duration");
-
 	private static String freezeMessage = Util.colorizeText(config.getString("PvP.Command.Freeze-Message"));
-
-	private static List<String> disallowedCommands = config.getStringList("PvP.Command.Disallowed-List");
 
 	private static List<String> whiteList = config.getStringList("PvP.Command.WhiteList");
 
@@ -46,6 +46,13 @@ public class Configuration implements Colors
 
 		return tagMessage;
 
+	}
+	
+	public static Set<String> getInvalidLeaveReasons()
+	{
+		
+		return invalidLeaveReasons;
+		
 	}
 
 	public static String getUnTagMessage()
@@ -76,13 +83,6 @@ public class Configuration implements Colors
 
 	}
 
-	public static boolean commandDisabled()
-	{
-
-		return disallowAll;
-
-	}
-
 	public static int getFreezeDuration()
 	{
 
@@ -97,38 +97,10 @@ public class Configuration implements Colors
 
 	}
 
-	public static List<String> getDisallowedCommands()
-	{
-
-		return disallowedCommands;
-
-	}
-
 	public static List<String> getWhiteList()
 	{
 
 		return whiteList;
-
-	}
-
-	public static boolean whiteListIsEmpty()
-	{
-
-		return Configuration.getWhiteList().size() == 0 ||  Configuration.getDisallowedCommands().get(0) == "null";
-
-	}
-
-	public static boolean commandsIsEmpty()
-	{
-
-		return Configuration.getDisallowedCommands().size() == 0 || Configuration.getDisallowedCommands().get(0) == "null";
-
-	}
-
-	public static boolean runCommandsIsEmpty()
-	{
-
-		return Configuration.getDisallowedCommands().size() == 0 || Configuration.getDisallowedCommands().get(0) == "null";
 
 	}
 

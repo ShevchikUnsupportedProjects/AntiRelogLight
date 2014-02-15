@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class Util
 {
 
-	public static String newLine = System.getProperty( "line.separator" );
+	public static final String newLine = System.getProperty( "line.separator" );
 
 	public static String colorizeText(String string) {
 

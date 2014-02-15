@@ -26,7 +26,7 @@ public class LogPrevention implements Listener, Colors
 	{
 
 		Player player = event.getPlayer();
-
+		
 		if (DataBase.isInCombat(player))
 		{
 
@@ -34,37 +34,43 @@ public class LogPrevention implements Listener, Colors
 
 			if (!Clock.isEnded(end))
 			{
-
-
 				if (!(player.getGameMode() == GameMode.CREATIVE))
 				{
 
-					if (Configuration.dropItemsEnabled())
+					String leaveReason = DataBase.getLeaveReason(player);
+					if (leaveReason != null && Configuration.getInvalidLeaveReasons().contains(leaveReason))
 					{
-
-						dropItems(player);
-
+	
+						if (Configuration.dropItemsEnabled())
+						{
+	
+							dropItems(player);
+	
+						}
+	
+						if (Configuration.dropArmorEnabled())
+						{
+	
+							dropArmor(player);
+	
+						}
+	
+						if (Configuration.dropExpEnabled())
+						{
+	
+							dropExp(player);
+	
+						}
+	
 					}
-
-					if (Configuration.dropArmorEnabled())
-					{
-
-						dropArmor(player);
-
-					}
-
-					if (Configuration.dropExpEnabled())
-					{
-
-						dropExp(player);
-
-					}
-
+				
 				}
 
 			}
 
 		}
+		
+		DataBase.clearLeaveReason(player);
 
 	}
 

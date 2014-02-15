@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -71,7 +72,14 @@ public class AntiRelog extends JavaPlugin implements Colors
 
 	public void registerConsoleReader()
 	{
-		((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addFilter(new ConsoleReader());
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() 
+		{
+			@Override
+			public void run() 
+			{
+				((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addFilter(new ConsoleReader());
+			}
+		});
 	}
 
 
@@ -90,6 +98,17 @@ public class AntiRelog extends JavaPlugin implements Colors
 		FileConfiguration cfg = this.getConfig();
 		FileConfigurationOptions cfgOptions = cfg.options();
 
+		cfg.addDefault("PvP.Freeze-Duration", 7);
+		cfg.addDefault("PvP.LeaveReasons", 
+			Arrays.asList(
+				new String[] {
+					"Disconnected",
+					"Internal Exception: java.io.IOException: Удаленный хост принудительно разорвал существующее подключение",
+					"Internal Exception: java.io.IOException: Соединение разорвано другой стороной"
+				}
+			)
+		);
+		
 		cfg.addDefault("PvP.Tag-Message.Enabled", true);
 		cfg.addDefault("PvP.Tag-Message.Tag", "<red>You have been tagged and are now in combat. Logging off will result in penalty.");
 		cfg.addDefault("PvP.Tag-Message.Un-Tag", "<green>You are not in combat anymore.");
@@ -100,7 +119,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 
 		cfg.addDefault("PvP.Command.Disallow-All", false);
 
-		cfg.addDefault("PvP.Command.Freeze-Duration", 7);
 		cfg.addDefault("PvP.Command.Freeze-Message", "<red>There's no running away from a battle!");
 
 		cfg.addDefault("PvP.Command.Disallowed-List", Arrays.asList("tp", "warp", "home", "tpa", "creative"));
@@ -126,16 +144,15 @@ public class AntiRelog extends JavaPlugin implements Colors
 
 		return "This is the AntiRelogLight configuration file." + newLine +
 				"Editing this file with Notepad++ is strongly recommended." + newLine +
-				"Save the file and reload the server after you are done editing for changes to take place." + newLine +
-				"Here are the explanations for each option:" + newLine +
+				"Save the file and reload the server after you are done editing for changes to take place." + newLine + 
+				"Here are the explanations for each option:" + newLine + newLine +
+				"Freeze Duration: This defines the amount of time in SECONDS that players must wait before he can use commands or leave safely" + newLine +
+				"LeaveReasons: If player leaves from combat with this messages in console than it is assumbed that the leave was intentional (not a sudden server error disconnect)" + newLine + newLine +
 				"Tag Message: This is the message sent when players enter combat." + newLine +
 				"UnTag Message: This is the message sent when players are not in combat anymore." + newLine + newLine +
-				"Drops: If these are set to true, the player will drop that equipment/item upon combat logging. If NPCs are enabled, the NPC will drop those items upon being killed." + newLine + newLine +
-				"Disallow All: Set this to true to disallow all commands while in PVP. (Overrides command list)." + newLine +
-				"Freeze Duration: This defines the amount of time in SECONDS that players must wait before using commands if they are hit. Set to 0 if you want to disable this feature." + newLine +
+				"Drops: If these are set to true, the player will drop that equipment/item upon combat logging." + newLine + newLine +
 				"Freeze Message: This sets the message shown if players try to use a command during PVP." + newLine +
-				"DisallowedCMDs: This is a list of the disallowed commands when Disallow All is off. Add to the list using the same format as shown. Set first line to 'null' to allow all commands." + newLine +
-				"WhiteList: If Disallow All is on, commands in this list will be the only ones allowed. Set first line to 'null' to disallow all commands while using Disallow All." + newLine + newLine +
+				"WhiteList: List of allowed commands in combat" + newLine + newLine +
 				"DisabledWorlds: The list of worlds at which plugin will be disabled";
 
 	}

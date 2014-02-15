@@ -23,39 +23,8 @@ public class FreezeCommand implements Listener, Colors
 		if (DataBase.isInCombat(player))
 		{
 
-			if (Configuration.commandDisabled())
+			if (!Clock.isEnded(DataBase.getEndingTime(player)))
 			{
-
-				String command = event.getMessage();
-
-				if (command.startsWith("/ar") || command.startsWith("/antirelog"))
-				{
-
-					return;
-
-				}
-
-				for (String s : Configuration.getWhiteList())
-				{
-
-					if (("/" + s).toLowerCase().contains(command.toLowerCase()))
-					{
-
-						return;
-
-					}
-
-				}
-
-				cancelEvent(event);
-
-			}
-
-			else if (!Clock.isEnded(DataBase.getEndingTime(player)))
-			{
-
-				if (!Configuration.commandsIsEmpty())
-				{
 
 					String command = event.getMessage();
 
@@ -66,27 +35,19 @@ public class FreezeCommand implements Listener, Colors
 
 					}
 
-					for (String s : Configuration.getDisallowedCommands())
+					for (String s : Configuration.getWhiteList())
 					{
 
 						if (("/" + s).toLowerCase().contains(command.toLowerCase()))
 						{
 
-							cancelEvent(event);
-							break;
+							return;
 
 						}
 
 					}
-
-				}
-
-			}
-
-			else
-			{
-
-				DataBase.removeFromCombat(player);
+					
+					cancelEvent(event);
 
 			}
 
