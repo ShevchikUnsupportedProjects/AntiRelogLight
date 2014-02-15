@@ -1,6 +1,6 @@
 name: AntiRelogLight
 main: com.github.r0306.AntiRelog.AntiRelog
-version: 2.6.0
+version: 1.0
 commands:
   antirelog:
     description: Shows plugin information.
