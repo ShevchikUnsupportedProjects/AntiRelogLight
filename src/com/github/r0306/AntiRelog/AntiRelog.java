@@ -117,11 +117,7 @@ public class AntiRelog extends JavaPlugin implements Colors
 		cfg.addDefault("PvP.CombatLog.Drop.Armor", true);
 		cfg.addDefault("PvP.CombatLog.Drop.Exp", true);
 
-		cfg.addDefault("PvP.Command.Disallow-All", false);
-
 		cfg.addDefault("PvP.Command.Freeze-Message", "<red>There's no running away from a battle!");
-
-		cfg.addDefault("PvP.Command.Disallowed-List", Arrays.asList("tp", "warp", "home", "tpa", "creative"));
 
 		cfg.addDefault("PvP.Command.WhiteList", new ArrayList<String>());
 
