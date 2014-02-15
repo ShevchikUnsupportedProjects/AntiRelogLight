@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.r0306.AntiRelog.AntiRelog;
 import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
@@ -62,8 +61,6 @@ public class LogPrevention implements Listener, Colors
 					}
 
 				}
-
-				AntiRelog.logger.log(player.getName(), null, 0);
 
 			}
 

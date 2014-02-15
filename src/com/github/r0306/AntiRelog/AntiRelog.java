@@ -12,7 +12,6 @@ import com.github.r0306.AntiRelog.Listeners.DamageListener;
 import com.github.r0306.AntiRelog.Listeners.DeathListener;
 import com.github.r0306.AntiRelog.Listeners.FreezeCommand;
 import com.github.r0306.AntiRelog.Listeners.LogPrevention;
-import com.github.r0306.AntiRelog.Loggers.PVPLogger;
 import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Plugin;
@@ -21,8 +20,6 @@ import com.github.r0306.AntiRelog.Util.Util;
 public class AntiRelog extends JavaPlugin implements Colors
 {
 
-	public static PVPLogger logger;
-
 	@Override
 	public void onEnable()
 	{
@@ -30,17 +27,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 		new Plugin(this);
 
 		loadConfiguration();
-
-		try
-		{
-
-			logger = new PVPLogger();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		}
 
 		registerExecutors();
 
@@ -86,8 +72,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 	{
 
 		DataBase.clearAll();
-
-		logger = null;
 
 		Plugin.shutDown();
 
