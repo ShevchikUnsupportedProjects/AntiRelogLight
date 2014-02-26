@@ -103,8 +103,7 @@ public class AntiRelog extends JavaPlugin implements Colors
 			Arrays.asList(
 				new String[] {
 					"Disconnected",
-					"Internal Exception: java.io.IOException: Удаленный хост принудительно разорвал существующее подключение",
-					"Internal Exception: java.io.IOException: Соединение разорвано другой стороной"
+					"disconnect.spam"
 				}
 			)
 		);
