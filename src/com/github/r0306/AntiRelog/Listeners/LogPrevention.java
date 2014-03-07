@@ -1,6 +1,7 @@
 package com.github.r0306.AntiRelog.Listeners;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import org.bukkit.GameMode;
 import org.bukkit.World;
@@ -8,7 +9,9 @@ import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,125 +20,70 @@ import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Configuration;
 
-public class LogPrevention implements Listener, Colors
-{
+public class LogPrevention implements Listener, Colors {
 
-
-	@EventHandler
-	public void onQuit(PlayerQuitEvent event) throws IOException
-	{
-
+	private HashSet<String> kicked = new HashSet<String>();
+	
+	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+	public void onKick(PlayerKickEvent event) {
+		kicked.add(event.getPlayer().getName());
+	}
+	
+	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+	public void onQuit(PlayerQuitEvent event) throws IOException {
 		Player player = event.getPlayer();
-		
-		if (DataBase.isInCombat(player))
-		{
-
+		if (DataBase.isInCombat(player)) {
 			long end = DataBase.getEndingTime(player);
-
-			if (!Clock.isEnded(end))
-			{
-				if (!(player.getGameMode() == GameMode.CREATIVE))
-				{
-
+			if (!Clock.isEnded(end)) {
+				if (!(player.getGameMode() == GameMode.CREATIVE)) {
 					String leaveReason = DataBase.getLeaveReason(player);
-					if (leaveReason != null && Configuration.getInvalidLeaveReasons().contains(leaveReason))
-					{
-	
-						if (Configuration.dropItemsEnabled())
-						{
-	
+					if ((leaveReason != null && Configuration.getInvalidLeaveReasons().contains(leaveReason)) || kicked.contains(player.getName())) {
+						if (Configuration.dropItemsEnabled()) {
 							dropItems(player);
-	
 						}
-	
-						if (Configuration.dropArmorEnabled())
-						{
-	
+						if (Configuration.dropArmorEnabled()) {
 							dropArmor(player);
-	
 						}
-	
-						if (Configuration.dropExpEnabled())
-						{
-	
+						if (Configuration.dropExpEnabled()) {
 							dropExp(player);
-	
 						}
-	
 					}
-				
 				}
-
 			}
-
 		}
-		
+		kicked.remove(player.getName());
 		DataBase.clearLeaveReason(player);
-
 	}
 
-	public static void dropItems(HumanEntity player)
-	{
-
-		for (ItemStack i : player.getInventory().getContents())
-		{
-
-			if (i != null)
-			{
-
+	public static void dropItems(HumanEntity player) {
+		for (ItemStack i : player.getInventory().getContents()) {
+			if (i != null) {
 				player.getWorld().dropItemNaturally(player.getLocation(), i);
-
 			}
-
 		}
-
 		player.getInventory().clear();
-
 	}
 
-	public static void dropArmor(HumanEntity player)
-	{
-
-		for (ItemStack armor : player.getInventory().getArmorContents())
-		{
-
-			if (armor.getAmount() != 0)
-			{
-
+	public static void dropArmor(HumanEntity player) {
+		for (ItemStack armor : player.getInventory().getArmorContents()) {
+			if (armor.getAmount() != 0) {
 				player.getWorld().dropItemNaturally(player.getLocation(), armor);
-
 			}
-
 		}
-
 		player.getInventory().setArmorContents(null);
-
 	}
 
-	public static void dropExp(Player player)
-	{
-
+	public static void dropExp(Player player) {
 		float Exp = player.getExp();
-
 		int ExpOrbs = (int) Exp;
-
 		int Level = player.getLevel();
-
 		int ExpTotal = ((2 * Level * Level) + (5 * ExpOrbs)) / 5;
-
 		World world = player.getWorld();
-
-		for (int i = 0; i < 6; i ++)
-		{
-
-			world.spawn(player.getLocation(), ExperienceOrb.class).setExperience( ExpTotal );
-
+		for (int i = 0; i < 6; i++) {
+			world.spawn(player.getLocation(), ExperienceOrb.class).setExperience(ExpTotal);
 		}
-
-		player.setLevel( 0 );
-
-		player.setExp( 0 );
-
+		player.setLevel(0);
+		player.setExp(0);
 	}
 
 }
