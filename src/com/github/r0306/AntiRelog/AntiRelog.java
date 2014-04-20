@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.apache.logging.log4j.LogManager;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +12,6 @@ import com.github.r0306.AntiRelog.Listeners.DamageListener;
 import com.github.r0306.AntiRelog.Listeners.DeathListener;
 import com.github.r0306.AntiRelog.Listeners.FreezeCommand;
 import com.github.r0306.AntiRelog.Listeners.LogPrevention;
-import com.github.r0306.AntiRelog.Loggers.ConsoleReader;
 import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Plugin;
@@ -34,8 +31,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 		registerExecutors();
 
 		registerListeners();
-
-		registerConsoleReader();
 
 	}
 
@@ -69,19 +64,6 @@ public class AntiRelog extends JavaPlugin implements Colors
 		getServer().getPluginManager().registerEvents(new LogPrevention(), this);
 		getServer().getPluginManager().registerEvents(new FreezeCommand(), this);
 	}
-
-	public void registerConsoleReader()
-	{
-		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() 
-		{
-			@Override
-			public void run() 
-			{
-				((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addFilter(new ConsoleReader());
-			}
-		});
-	}
-
 
 	public void shutdownSequence() throws IOException
 	{

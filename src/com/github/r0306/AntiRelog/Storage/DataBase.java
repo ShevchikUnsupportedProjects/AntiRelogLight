@@ -11,7 +11,6 @@ import com.github.r0306.AntiRelog.Util.Clock;
 public class DataBase
 {
 
-	private static HashMap<String, String> leaveReason = new HashMap<String, String>();
 	private static HashMap<String, Entity> lastDamager = new HashMap<String, Entity>();
 	private static HashMap<String, Long> inCombat = new HashMap<String, Long>();
 	private static HashMap<String, Integer> ids = new HashMap<String, Integer>();
@@ -185,29 +184,6 @@ public class DataBase
 		return -1;
 
 	}
-	
-	
-	public static void setLeaveReason(String name, String reason)
-	{
 
-		leaveReason.put(name, reason);
-
-	}
-	
-	public static String getLeaveReason(Player player)
-	{
-		
-		return leaveReason.get(player.getName());
-		
-	}
-	
-	public static void clearLeaveReason(Player player)
-	{
-		
-		leaveReason.remove(player.getName());
-		
-	}
-	
-	
 
 }

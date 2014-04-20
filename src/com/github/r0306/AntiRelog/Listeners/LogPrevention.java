@@ -1,8 +1,6 @@
 package com.github.r0306.AntiRelog.Listeners;
 
 import java.io.IOException;
-import java.util.HashSet;
-
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.ExperienceOrb;
@@ -11,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,37 +19,25 @@ import com.github.r0306.AntiRelog.Util.Configuration;
 
 public class LogPrevention implements Listener, Colors {
 
-	private HashSet<String> kicked = new HashSet<String>();
-	
-	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-	public void onKick(PlayerKickEvent event) {
-		kicked.add(event.getPlayer().getName());
-	}
-	
 	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onQuit(PlayerQuitEvent event) throws IOException {
 		Player player = event.getPlayer();
 		if (DataBase.isInCombat(player)) {
 			long end = DataBase.getEndingTime(player);
 			if (!Clock.isEnded(end)) {
-				if (!(player.getGameMode() == GameMode.CREATIVE)) {
-					String leaveReason = DataBase.getLeaveReason(player);
-					if ((leaveReason != null && Configuration.getInvalidLeaveReasons().contains(leaveReason)) || kicked.contains(player.getName())) {
-						if (Configuration.dropItemsEnabled()) {
-							dropItems(player);
-						}
-						if (Configuration.dropArmorEnabled()) {
-							dropArmor(player);
-						}
-						if (Configuration.dropExpEnabled()) {
-							dropExp(player);
-						}
+				if (player.getGameMode() != GameMode.CREATIVE) {
+					if (Configuration.dropItemsEnabled()) {
+						dropItems(player);
+					}
+					if (Configuration.dropArmorEnabled()) {
+						dropArmor(player);
+					}
+					if (Configuration.dropExpEnabled()) {
+						dropExp(player);
 					}
 				}
 			}
 		}
-		kicked.remove(player.getName());
-		DataBase.clearLeaveReason(player);
 	}
 
 	public static void dropItems(HumanEntity player) {
