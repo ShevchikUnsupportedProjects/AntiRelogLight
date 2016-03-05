@@ -10,123 +10,61 @@ import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
 
-public class Executor implements CommandExecutor, Colors
-{
+public class Executor implements CommandExecutor, Colors {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
-	{
-
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		Player player = null;
-
-		if (sender instanceof Player)
-		{
-
+		if (sender instanceof Player) {
 			player = (Player) sender;
-
 		}
-
-		if (cmd.getName().equalsIgnoreCase("ar") || cmd.getName().equalsIgnoreCase("antirelog") || cmd.getName().equalsIgnoreCase("arl"))
-		{
-
-			if (args.length == 1)
-			{
-
-				if (args[0].equalsIgnoreCase("t") || args[0].equalsIgnoreCase("time"))
-				{
-
-					if (playerCheck(sender))
-					{
-
+		if (cmd.getName().equalsIgnoreCase("ar") || cmd.getName().equalsIgnoreCase("antirelog") || cmd.getName().equalsIgnoreCase("arl")) {
+			if (args.length == 1) {
+				if (args[0].equalsIgnoreCase("t") || args[0].equalsIgnoreCase("time")) {
+					if (playerCheck(sender)) {
 						getRemainingTime(player);
-
 					}
-
-				}
-
-				else
-				{
-
+				} else {
 					unknownCommand(sender);
-
 				}
-
-			}
-			else
-			{
-
+			} else {
 				unknownCommand(sender);
-
 			}
-
 		}
-
 		return true;
 
 	}
 
-	public void displayRemainingTime(Player player)
-	{
-
-
-
+	public void displayRemainingTime(Player player) {
 	}
 
-	public boolean playerCheck(CommandSender sender)
-	{
-
-		if (sender instanceof Player)
-		{
-
+	public boolean playerCheck(CommandSender sender) {
+		if (sender instanceof Player) {
 			return true;
-
 		}
-
 		sender.sendMessage(name + ChatColor.RED + "You must be a player to use this command!");
-
 		return false;
 
 	}
 
-	public void getRemainingTime(Player player)
-	{
-
-		if (DataBase.isInCombat(player))
-		{
-
+	public void getRemainingTime(Player player) {
+		if (DataBase.isInCombat(player)) {
 			long end = DataBase.getEndingTime(player);
-
-			if (!Clock.isEnded(end))
-			{
-
+			if (!Clock.isEnded(end)) {
 				long remaining = Clock.getElapsed(Clock.getTime(), end);
-
-				player.sendMessage(name + ChatColor.DARK_AQUA +  "You have " + remaining + " seconds before combat ends.");
-
+				player.sendMessage(name + ChatColor.DARK_AQUA + "You have " + remaining + " seconds before combat ends.");
 			}
-
-		}
-		else
-		{
-
+		} else {
 			player.sendMessage(name + ChatColor.GREEN + "You are not currently in combat.");
-
 		}
-
 	}
 
-	public void noPermissions(CommandSender sender)
-	{
-
+	public void noPermissions(CommandSender sender) {
 		sender.sendMessage(name + ChatColor.RED + "You do not have permission!");
-
 	}
 
-	public void unknownCommand(CommandSender sender)
-	{
-
+	public void unknownCommand(CommandSender sender) {
 		sender.sendMessage(name + ChatColor.RED + "Unknown command.");
-
 	}
 
 }

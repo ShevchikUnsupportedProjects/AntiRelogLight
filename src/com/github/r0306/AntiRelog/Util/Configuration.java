@@ -6,9 +6,7 @@ import java.util.Set;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-
-public class Configuration implements Colors
-{
+public class Configuration implements Colors {
 
 	private static FileConfiguration config = Plugin.getPlugin().getConfig();
 
@@ -17,9 +15,9 @@ public class Configuration implements Colors
 	private static String tagMessage = Util.colorizeText(config.getString("PvP.Tag-Message.Tag"));
 
 	private static String unTagMessage = Util.colorizeText(config.getString("PvP.Tag-Message.Un-Tag"));
-	
+
 	private static Set<String> invalidLeaveReasons = new HashSet<String>(config.getStringList("PvP.LeaveReasons"));
-	
+
 	private static int freezeDuration = config.getInt("PvP.Freeze-Duration");
 
 	private static boolean dropItems = config.getBoolean("PvP.CombatLog.Drop.Items");
@@ -34,81 +32,48 @@ public class Configuration implements Colors
 
 	private static List<String> excludedWorlds = config.getStringList("Exclusions.DisabledWorlds");
 
-	public static boolean tagMessageEnabled()
-	{
-
+	public static boolean tagMessageEnabled() {
 		return tagMessageEnabled;
-
 	}
 
-	public static String getTagMessage()
-	{
-
+	public static String getTagMessage() {
 		return tagMessage;
-
 	}
-	
-	public static Set<String> getInvalidLeaveReasons()
-	{
-		
+
+	public static Set<String> getInvalidLeaveReasons() {
 		return invalidLeaveReasons;
-		
 	}
 
-	public static String getUnTagMessage()
-	{
-
+	public static String getUnTagMessage() {
 		return unTagMessage;
-
 	}
 
-	public static boolean dropItemsEnabled()
-	{
-
+	public static boolean dropItemsEnabled() {
 		return dropItems;
-
 	}
 
-	public static boolean dropArmorEnabled()
-	{
-
+	public static boolean dropArmorEnabled() {
 		return dropArmor;
-
 	}
 
-	public static boolean dropExpEnabled()
-	{
-
+	public static boolean dropExpEnabled() {
 		return dropExp;
-
 	}
 
-	public static int getFreezeDuration()
-	{
-
+	public static int getFreezeDuration() {
 		return freezeDuration * 20;
-
 	}
 
-	public static String getFreezeMessage()
-	{
-
+	public static String getFreezeMessage() {
 		return freezeMessage;
-
 	}
 
-	public static List<String> getWhiteList()
-	{
-
+	public static List<String> getWhiteList() {
 		return whiteList;
-
 	}
 
-	public static List<String> getExcludedWorlds()
-	{
-
+	public static List<String> getExcludedWorlds() {
 		return excludedWorlds;
-
 	}
 
 }

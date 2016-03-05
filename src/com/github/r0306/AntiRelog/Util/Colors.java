@@ -2,9 +2,7 @@ package com.github.r0306.AntiRelog.Util;
 
 import org.bukkit.ChatColor;
 
-
-public interface Colors
-{
+public interface Colors {
 
 	ChatColor aqua = ChatColor.AQUA;
 	ChatColor black = ChatColor.BLACK;
@@ -23,4 +21,5 @@ public interface Colors
 	ChatColor white = ChatColor.WHITE;
 	ChatColor yellow = ChatColor.YELLOW;
 	String name = ChatColor.GOLD + "[" + Plugin.getPlugin().getDescription().getName() + "] ";
+
 }

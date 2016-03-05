@@ -11,65 +11,37 @@ import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Configuration;
 
-public class FreezeCommand implements Listener, Colors
-{
+public class FreezeCommand implements Listener, Colors {
 
-	@EventHandler (priority = EventPriority.LOWEST, ignoreCancelled = true)
-	public void freezeCommand(PlayerCommandPreprocessEvent event)
-	{
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	public void freezeCommand(PlayerCommandPreprocessEvent event) {
 
 		Player player = event.getPlayer();
 
-		if (DataBase.isInCombat(player))
-		{
+		if (DataBase.isInCombat(player)) {
+			if (!Clock.isEnded(DataBase.getEndingTime(player))) {
+				String command = event.getMessage();
+				if (command.startsWith("/ar") || command.startsWith("/antirelog")) {
+					return;
+				}
 
-			if (!Clock.isEnded(DataBase.getEndingTime(player)))
-			{
-
-					String command = event.getMessage();
-
-					if (command.startsWith("/ar") || command.startsWith("/antirelog"))
-					{
-
+				for (String s : Configuration.getWhiteList()) {
+					if (("/" + s).toLowerCase().contains(command.toLowerCase())) {
 						return;
-
 					}
+				}
 
-					for (String s : Configuration.getWhiteList())
-					{
-
-						if (("/" + s).toLowerCase().contains(command.toLowerCase()))
-						{
-
-							return;
-
-						}
-
-					}
-					
-					cancelEvent(event);
-
+				cancelEvent(event);
 			}
-
 		}
-
 	}
 
-	public void cancelEvent(PlayerCommandPreprocessEvent event)
-	{
-
+	public void cancelEvent(PlayerCommandPreprocessEvent event) {
 		Player player = event.getPlayer();
-
-
-		if (Configuration.tagMessageEnabled())
-		{
-
+		if (Configuration.tagMessageEnabled()) {
 			player.sendMessage(name + Configuration.getFreezeMessage());
-
 		}
-
 		event.setCancelled(true);
-
 	}
 
 }

@@ -8,29 +8,19 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Configuration;
 
-public class DeathListener implements Listener
-{
+public class DeathListener implements Listener {
 
 	@EventHandler
-	public void onDeath(PlayerDeathEvent event)
-	{
+	public void onDeath(PlayerDeathEvent event) {
 
 		Player player = event.getEntity();
 
-		if (DataBase.isInCombat(player))
-		{
-
+		if (DataBase.isInCombat(player)) {
 			DataBase.removeFromCombat(player);
-
-			if (Configuration.tagMessageEnabled())
-			{
-
+			if (Configuration.tagMessageEnabled()) {
 				player.sendMessage(Configuration.getTagMessage());
-
 			}
-
 		}
-
 	}
 
 }
