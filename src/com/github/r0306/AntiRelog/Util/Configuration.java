@@ -22,8 +22,6 @@ public class Configuration implements Colors {
 
 	private static boolean dropItems = config.getBoolean("PvP.CombatLog.Drop.Items");
 
-	private static boolean dropArmor = config.getBoolean("PvP.CombatLog.Drop.Armor");
-
 	private static boolean dropExp = config.getBoolean("PvP.CombatLog.Drop.Exp");
 
 	private static String freezeMessage = Util.colorizeText(config.getString("PvP.Command.Freeze-Message"));
@@ -50,10 +48,6 @@ public class Configuration implements Colors {
 
 	public static boolean dropItemsEnabled() {
 		return dropItems;
-	}
-
-	public static boolean dropArmorEnabled() {
-		return dropArmor;
 	}
 
 	public static boolean dropExpEnabled() {

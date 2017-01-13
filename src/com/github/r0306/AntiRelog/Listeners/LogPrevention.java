@@ -29,9 +29,6 @@ public class LogPrevention implements Listener, Colors {
 					if (Configuration.dropItemsEnabled()) {
 						dropItems(player);
 					}
-					if (Configuration.dropArmorEnabled()) {
-						dropArmor(player);
-					}
 					if (Configuration.dropExpEnabled()) {
 						dropExp(player);
 					}
@@ -49,20 +46,8 @@ public class LogPrevention implements Listener, Colors {
 		player.getInventory().clear();
 	}
 
-	public static void dropArmor(HumanEntity player) {
-		for (ItemStack armor : player.getInventory().getArmorContents()) {
-			if (armor.getAmount() != 0) {
-				player.getWorld().dropItemNaturally(player.getLocation(), armor);
-			}
-		}
-		player.getInventory().setArmorContents(null);
-	}
-
 	public static void dropExp(Player player) {
-		float Exp = player.getExp();
-		int ExpOrbs = (int) Exp;
-		int Level = player.getLevel();
-		int ExpTotal = ((2 * Level * Level) + (5 * ExpOrbs)) / 5;
+		int ExpTotal = player.getTotalExperience();
 		World world = player.getWorld();
 		for (int i = 0; i < 6; i++) {
 			world.spawn(player.getLocation(), ExperienceOrb.class).setExperience(ExpTotal);
