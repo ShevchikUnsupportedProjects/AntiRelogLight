@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-import com.github.r0306.AntiRelog.Storage.DataBase;
+import com.github.r0306.AntiRelog.CombatTracker;
 import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Configuration;
@@ -19,69 +19,40 @@ public class DamageListener implements Listener, Colors {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onDamage(EntityDamageByEntityEvent event) {
-		Entity entity = event.getEntity();
+		Entity victim = event.getEntity();
 		Entity attacker = event.getDamager();
 
-		if (Configuration.getExcludedWorlds().contains(entity.getWorld().getName()) || Configuration.getExcludedWorlds().contains(attacker.getWorld().getName())) {
+		if (Configuration.getExcludedWorlds().contains(victim.getWorld().getName()) || Configuration.getExcludedWorlds().contains(attacker.getWorld().getName())) {
 			return;
 		}
 
 		if (event.getCause() != DamageCause.CUSTOM && event.getDamage() >= 0) {
-			Player player1 = entity instanceof Player ? (Player) entity : null;
-			Player player2 = attacker instanceof Player ? (Player) attacker : null;
-			if (player1 != null && player2 != null) {
-				tagPlayer(player1);
-				tagPlayer(player2);
-				DataBase.setLastDamager(player1, player2);
-
-			} else if (player1 != null && attacker instanceof Projectile) {
-				tagPlayerProjectile(player1, (Projectile) attacker);
+			Player victimPlayer = victim instanceof Player ? (Player) victim : null;
+			Player attackerPlayer = attacker instanceof Player ? (Player) attacker : null;
+			if (victimPlayer != null && attackerPlayer != null) {
+				tagPlayer(victimPlayer);
+				tagPlayer(attackerPlayer);
+			} else if (victimPlayer != null && attacker instanceof Projectile) {
+				tagPlayerProjectile(victimPlayer, (Projectile) attacker);
 			}
 		}
-	}
-
-	public void tagPlayer(Player player) {
-
-		if (!Util.canBypass(player)) {
-
-			if (!DataBase.isInCombat(player)) {
-
-				if (Configuration.tagMessageEnabled()) {
-
-					player.sendMessage(name + Configuration.getTagMessage());
-
-				}
-
-			}
-
-			long end = Clock.getEnd();
-
-			DataBase.addInCombat(player, end);
-
-			Clock.scheduleDelayedMessage(player);
-
-		}
-
 	}
 
 	public void tagPlayerProjectile(Player player, Projectile projectile) {
 		if (projectile.getShooter() instanceof Player) {
-
 			Player attacker = (Player) projectile.getShooter();
-
 			tagPlayer(player);
 			tagPlayer(attacker);
-
-			DataBase.setLastDamager(player, attacker);
 		}
 	}
 
-	public Player getPlayer(Player player1, Player player2) {
-		return player1 != null ? player1 : player2;
-	}
-
-	public Entity getEntity(Entity entity1, Entity entity2) {
-		return entity1 instanceof Player ? entity2 : entity1;
+	public void tagPlayer(Player player) {
+		if (!Util.canBypass(player)) {
+			if (Configuration.messagesEnabled() && !CombatTracker.isInCombat(player)) {
+				player.sendMessage(name + Configuration.getTagMessage());
+			}
+			CombatTracker.addInCombat(player, Clock.getEnd());
+		}
 	}
 
 }

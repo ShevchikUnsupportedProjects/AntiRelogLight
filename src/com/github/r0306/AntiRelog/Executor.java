@@ -6,7 +6,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
 
@@ -18,38 +17,30 @@ public class Executor implements CommandExecutor, Colors {
 		if (sender instanceof Player) {
 			player = (Player) sender;
 		}
-		if (cmd.getName().equalsIgnoreCase("ar") || cmd.getName().equalsIgnoreCase("antirelog") || cmd.getName().equalsIgnoreCase("arl")) {
-			if (args.length == 1) {
-				if (args[0].equalsIgnoreCase("t") || args[0].equalsIgnoreCase("time")) {
-					if (playerCheck(sender)) {
-						getRemainingTime(player);
-					}
-				} else {
-					unknownCommand(sender);
+		if (args.length == 1) {
+			if (args[0].equalsIgnoreCase("t") || args[0].equalsIgnoreCase("time")) {
+				if (isPlayer(sender)) {
+					displayRemainingTime(player);
+					return true;
 				}
-			} else {
-				unknownCommand(sender);
 			}
 		}
+		displayUnknownCommand(sender);
 		return true;
 
 	}
 
-	public void displayRemainingTime(Player player) {
-	}
-
-	public boolean playerCheck(CommandSender sender) {
+	public boolean isPlayer(CommandSender sender) {
 		if (sender instanceof Player) {
 			return true;
 		}
 		sender.sendMessage(name + ChatColor.RED + "You must be a player to use this command!");
 		return false;
-
 	}
 
-	public void getRemainingTime(Player player) {
-		if (DataBase.isInCombat(player)) {
-			long end = DataBase.getEndingTime(player);
+	public void displayRemainingTime(Player player) {
+		if (CombatTracker.isInCombat(player)) {
+			long end = CombatTracker.getEndingTime(player);
 			if (!Clock.isEnded(end)) {
 				long remaining = Clock.getElapsed(Clock.getTime(), end);
 				player.sendMessage(name + ChatColor.DARK_AQUA + "You have " + remaining + " seconds before combat ends.");
@@ -59,11 +50,11 @@ public class Executor implements CommandExecutor, Colors {
 		}
 	}
 
-	public void noPermissions(CommandSender sender) {
+	public void displayNoPermissions(CommandSender sender) {
 		sender.sendMessage(name + ChatColor.RED + "You do not have permission!");
 	}
 
-	public void unknownCommand(CommandSender sender) {
+	public void displayUnknownCommand(CommandSender sender) {
 		sender.sendMessage(name + ChatColor.RED + "Unknown command.");
 	}
 

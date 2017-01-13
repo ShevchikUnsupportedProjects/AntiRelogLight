@@ -1,8 +1,6 @@
 package com.github.r0306.AntiRelog.Util;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -13,10 +11,6 @@ public class Configuration implements Colors {
 	private static boolean tagMessageEnabled = config.getBoolean("PvP.Tag-Message.Enabled");
 
 	private static String tagMessage = Util.colorizeText(config.getString("PvP.Tag-Message.Tag"));
-
-	private static String unTagMessage = Util.colorizeText(config.getString("PvP.Tag-Message.Un-Tag"));
-
-	private static Set<String> invalidLeaveReasons = new HashSet<String>(config.getStringList("PvP.LeaveReasons"));
 
 	private static int freezeDuration = config.getInt("PvP.Freeze-Duration");
 
@@ -30,28 +24,20 @@ public class Configuration implements Colors {
 
 	private static List<String> excludedWorlds = config.getStringList("Exclusions.DisabledWorlds");
 
-	public static boolean tagMessageEnabled() {
-		return tagMessageEnabled;
-	}
-
-	public static String getTagMessage() {
-		return tagMessage;
-	}
-
-	public static Set<String> getInvalidLeaveReasons() {
-		return invalidLeaveReasons;
-	}
-
-	public static String getUnTagMessage() {
-		return unTagMessage;
-	}
-
 	public static boolean dropItemsEnabled() {
 		return dropItems;
 	}
 
 	public static boolean dropExpEnabled() {
 		return dropExp;
+	}
+
+	public static boolean messagesEnabled() {
+		return tagMessageEnabled;
+	}
+
+	public static String getTagMessage() {
+		return tagMessage;
 	}
 
 	public static int getFreezeDuration() {

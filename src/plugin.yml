@@ -1,22 +1,16 @@
 name: AntiRelogLight
 main: com.github.r0306.AntiRelog.AntiRelog
-version: 1.1
+version: 2.0
 commands:
   antirelog:
     description: Shows plugin information.
     usage: /<command>
     aliases: [a, ar, arl]
-  antirelog time:
-    description: Displays combat time left.
-    usage: /<command>
-    aliases: [antirelog t]
 permissions:
     antirelog.*:
         description: Gives access to all PVP bypasses and AntiRelog commands.
         children:
             antirelog.pvpbypass: true
-            antirelog.unban: true
-            antirelog.aggressivenpc: true
     antirelog.pvpbypass:
         description: Players who have this node can bypass all PVP battles and penalties.
         default: op

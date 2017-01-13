@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.github.r0306.AntiRelog.Storage.DataBase;
+import com.github.r0306.AntiRelog.CombatTracker;
 import com.github.r0306.AntiRelog.Util.Clock;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Configuration;
@@ -22,8 +22,8 @@ public class LogPrevention implements Listener, Colors {
 	@EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
 	public void onQuit(PlayerQuitEvent event) throws IOException {
 		Player player = event.getPlayer();
-		if (DataBase.isInCombat(player)) {
-			long end = DataBase.getEndingTime(player);
+		if (CombatTracker.isInCombat(player)) {
+			long end = CombatTracker.getEndingTime(player);
 			if (!Clock.isEnded(end)) {
 				if (player.getGameMode() != GameMode.CREATIVE) {
 					if (Configuration.dropItemsEnabled()) {
@@ -35,6 +35,7 @@ public class LogPrevention implements Listener, Colors {
 				}
 			}
 		}
+		CombatTracker.removeFromCombat(player);
 	}
 
 	public static void dropItems(HumanEntity player) {

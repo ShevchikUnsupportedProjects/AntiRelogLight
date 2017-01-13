@@ -12,7 +12,6 @@ import com.github.r0306.AntiRelog.Listeners.DamageListener;
 import com.github.r0306.AntiRelog.Listeners.DeathListener;
 import com.github.r0306.AntiRelog.Listeners.FreezeCommand;
 import com.github.r0306.AntiRelog.Listeners.LogPrevention;
-import com.github.r0306.AntiRelog.Storage.DataBase;
 import com.github.r0306.AntiRelog.Util.Colors;
 import com.github.r0306.AntiRelog.Util.Plugin;
 import com.github.r0306.AntiRelog.Util.Util;
@@ -48,7 +47,7 @@ public class AntiRelog extends JavaPlugin implements Colors {
 	}
 
 	public void shutdownSequence() throws IOException {
-		DataBase.clearAll();
+		CombatTracker.clearAll();
 		Plugin.shutDown();
 	}
 
